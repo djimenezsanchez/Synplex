@@ -146,7 +146,7 @@ end
   
 % Save final step.
 step = step + 1;  
-GT_Nb = modefilt(GT_Nb,[NeighborhoodMinSize(1)-1, NeighborhoodMinSize(1)-1]);
+GT_Nb = modefilt(GT_Nb,[NeighborhoodMinSize(1)*3+1, NeighborhoodMinSize(1)*3+1]);
 Modeling_Neighborhoods_Save(BasefolderName,GT_Nb,subject_type,subject_number,step,saveOptimizationLossNeigh,saveOptimizationNumberOfPixelsNeigh)                
 
 end
