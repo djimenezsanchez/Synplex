@@ -5,7 +5,7 @@ load([BasefolderName,'/Raw/Phenotypes_GT_',num2str(subject_type),'_nImage_',num2
 load([BasefolderName,'/Raw/Cells_GT_',num2str(subject_type),'_nImage_',num2str(subject_number),'_step_',num2str(last_step_phenotypes),'.mat']);                                             
 load([BasefolderName,'/Raw/Nucleus_GT_',num2str(subject_type),'_nImage_',num2str(subject_number),'_step_',num2str(last_step_phenotypes),'.mat']);                                             
 load(['Synthetic_microenvironment/parameters/Marker_Expression_',subject_type,'_',num2str(subject_number),'.mat'],...
-             'Marker_Localization','Marker_Expression','SNR','gaussFiltImage','gaussFiltLeakage','PerlinPersistence','PerlinPersistence_Sparse','PerlinFreq','PerlinFreq_Sparse','BackgroundPerlinNoise'); 
+             'Marker_Localization','Marker_Expression','SNR','gaussFiltImage','gaussFiltLeakage_Right','gaussFiltLeakage_Left','PerlinPersistence','PerlinPersistence_Sparse','PerlinFreq','PerlinFreq_Sparse','BackgroundPerlinNoise'); 
 load(['Synthetic_microenvironment/parameters/CellularNeighborhoods_',subject_type,'_',num2str(subject_number),'.mat']); 
 load(['Synthetic_microenvironment/parameters/CellPhenotypes_',subject_type,'_',num2str(subject_number),'.mat']);
 sizeImages = size(GT_Pheno);
@@ -15,7 +15,7 @@ crop_y=1:sizeImages(2);
 
 % Separate cell masks into a nucleous, cytoplasm, and membrane.
 [Nuclear_Mask, Cytoplasm_Mask, Membrane_Mask] = nuc_cyt_mem_cell(sizeImages, Pheno_Cells, GT_Pheno, Pheno_Nuc, M);
-figure; imshow(label2rgb(GT_Nb_cut(crop_x,crop_y)),[])
+figure; imshow(label2rgb(GT_Nb_cut(crop_x,crop_y),'parula'),[])
 figure;imshow(label2rgb(Pheno_Nuc(crop_x,crop_y)),[]);
 figure;imshow(GT_Pheno(crop_x,crop_y),[]);
 
@@ -40,13 +40,13 @@ for mk=1:size(Im,3); Im(:,:,mk) = awgn(Im(:,:,mk),SNR(mk)); end;
 to_rgb(Im(crop_x,crop_y,:));
     
 % Marker leakage
-Im = reshape(Im, [size(Im,1)*size(Im,2),size(Im,3)]);
-for i=1:size(Im,2)
-    if gaussFiltLeakage(i)>0
-        Im(:,i) = imgaussfilt(Im(:,i),gaussFiltLeakage(i));     
-    end
+for i=1:size(gaussFiltLeakage_Left,2)-1
+    Im(:,:,i+1) = Im(:,:,i+1) + Im(:,:,i).*gaussFiltLeakage_Left(i);
 end
-Im = reshape(Im, [sizeImages(1),sizeImages(2),size(Im,2)]);
+for i=2:size(gaussFiltLeakage_Right,2)
+    Im(:,:,i-1) = Im(:,:,i-1) + Im(:,:,i).*gaussFiltLeakage_Left(i);
+end
+
 to_rgb(Im(crop_x,crop_y,:));
 
 % Save Image multispectral. Image with multispectral values.
@@ -56,7 +56,7 @@ if exist([filename,'.tiff'], 'file')==2
 end
 for chan = 1:M(2)
     Im(:,:,chan) = Im(:,:,chan)-min(min(Im(:,:,chan)));
-    Im(:,:,chan) = Im(:,:,chan)/max(max(Im(:,:,chan)));
+    Im(:,:,chan) = Im(:,:,chan)/max(max(max(Im(:,:,:))));
     imwrite(Im(:,:,chan), [filename,'.tiff'], 'writemode', 'append');
 end
  
@@ -68,7 +68,9 @@ function [Nuclear_Mask, Cytoplasm_Mask, Membrane_Mask] = nuc_cyt_mem_cell(sizeIm
 Cytoplasm_Mask = zeros(sizeImages);
 Membrane_Mask = zeros(sizeImages);
 Nuclear_Mask = zeros(sizeImages);
-for cell = unique(Pheno_Cells)'
+listCells = unique(Pheno_Cells)';
+listCells = listCells(~isnan(listCells));
+for cell = listCells 
     
    thiscell = Pheno_Cells==cell;
    thiscell_phenotype = mode(GT_Pheno(thiscell));   
@@ -103,7 +105,7 @@ end
 function [Im] = add_perlinNoise_background(Im,M,sizeImages,BackgroundPerlinNoise,GT_Nb_cut)
 for mk = 1:M(2)
     GeneralPerlinNoise = Perlin_Noise(sizeImages(1),sizeImages(2),BackgroundPerlinNoise(2):BackgroundPerlinNoise(3),BackgroundPerlinNoise(1));    
-    Im(:,:,mk) = Im(:,:,mk)+GeneralPerlinNoise.*0.15.*(GT_Nb_cut<max(GT_Nb_cut(:))); % Add noise to all markers with the exception of the background neighbo
+    Im(:,:,mk) = Im(:,:,mk)+GeneralPerlinNoise.*0.15.*(GT_Nb_cut>1); % Add noise to all markers with the exception of the background neighbo
 end
 end
 
