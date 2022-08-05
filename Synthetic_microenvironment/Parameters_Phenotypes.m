@@ -37,7 +37,8 @@ Phenotype_Abundance = Phenotype_Abundance./sum(Phenotype_Abundance,2);
 
 % User-defined parameter visualization
 Parameters_Visualization_Phenotypes(CellPhenotypeNames,PhenoSize, ...
-                                    Ph,Phenotype_Abundance,PhenoEccentricity,Nb,NeighborhoodNames)
+                                    Ph,Phenotype_Abundance,PhenoEccentricity,PhenoPolarity,...
+                                    PhenoMorphDeviation,RatioNucleousCellSize,Nb,NeighborhoodNames)
 
 % Save Information from Phenotypes
 save(['Synthetic_microenvironment/parameters/CellPhenotypes_',subject_type,'_',num2str(subject_number),'.mat'],'CellPhenotypeInteraction','Ph',...

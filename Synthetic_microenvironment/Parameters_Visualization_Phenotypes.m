@@ -1,13 +1,7 @@
-function [] = Parameters_Visualization_Phenotypes(CellPhenotypeNames,PhenoSize, CellPhenotypeInteraction,F,...
+function [] = Parameters_Visualization_Phenotypes(CellPhenotypeNames,PhenoSize,F,...
                                                 Phenotype_Abundance,PhenoEccentricity, PhenoPolarity, PhenoMorphDeviation, RatioNucleousCellSize,Nb,NeighborhoodNames)
 
     % Heatmap showing OPheno interactions
-    figure;
-    h = heatmap(CellPhenotypeNames([4,6,7]),CellPhenotypeNames([4,6,7]),CellPhenotypeInteraction([4,6,7],[4,6,7],2),'Colormap',jet,'ColorLimits',[0 1]);
-    h.Title = 'Cellular neighborhoods interaction';
-    h.XLabel = 'Neighborhoods';
-    h.YLabel = 'Neighborhoods'; 
-    
     figure; 
     b = bar(categorical(CellPhenotypeNames),PhenoSize); hold on;
     hold on;
