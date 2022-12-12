@@ -1,6 +1,6 @@
 ## Modeling cell phenotypes
 
-To model custom cell phenotypes and their interactions one should edit Parameters_Phenotypes.m located at Synplex/Synthetic_microenvironment/. In this module there are  variables that can be tuned:
+To model custom cell phenotypes and their interactions one should edit Parameters_Phenotypes.m located at Synplex/Synthetic_microenvironment/. In this module there are  eight variables that can be tuned:
 
 ### CellPhenotypeNames:
 A cell data structure containing names of the cell phenotypes to be simulated e.g.,
