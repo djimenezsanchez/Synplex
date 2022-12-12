@@ -4,11 +4,19 @@
 © [Daniel Jiménez Sánchez - CIMA University of Navarra](https://cima.cun.es/en/research/research-programs/solid-tumors-program/research-group-preclinical-models-preclinical-tools-analysis) - This code is made available under the GNU GPLv3 License and is available for non-commercial academic purposes. 
 
 ## Usage
+Synplex consists of three independent modules. They can be tuned to create custom multiplex immunofluorescence image. For each module a guide is provided:
+
+- [1. Modeling cellular neighborhoods](README_1.md#Modeling-cellular-neighborhoods)
+- [2. Modeling cell phenotypes](README_2.md#Modeling-cell-phenotypes)
+- [3. Cell expression and virtual microscopy](README_3.md#Cell-expression-and-virtual-microscopy)
+
+## Example data
 Run the main.m file using MATLAB to generate synthetic multiplexed histological images. With the default parameters that are set in Parameters_Neighborhoods.m, Parameters_Phenotypes.m, and Parameters_Texture.m the simulator will generate images like the following one: 
 
 ![image](https://user-images.githubusercontent.com/43730952/183055649-571b5bfc-83c6-4d77-a594-8415fe30af33.png)
 
 where blue is DAPI (staining nuclear DNA), red is cytokeratin (staining tumor cells), and green is CD8 (staining T cells)
+
 
 ## Citation
 Please cite this paper in case our method or parts of it were helpful in your work.
