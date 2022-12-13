@@ -21,3 +21,10 @@ These values were used to define the configuration of Synplex. We then simulated
 ![alt text](https://github.com/djimenezsanchez/Synplex/blob/main/supplfig.jpg)
 
 ![alt text](https://github.com/djimenezsanchez/Synplex/blob/main/suppltab.jpg)
+
+### Simulation of marker expression and virtual microscopy from a real multiplex image dataset
+To define the image quality parameters of the simulation, we extracted key parameters directly from the acquired images, and microscopy set-up parameters from the optics that were used to generate the images, i.e., PhenoImager HT. The marker expression levels, M_p, were measured on positive areas of two tissues to obtain an experimental average marker expression. To calculate the SNR of each marker, we measured the average expression levels of stained tissue areas (i.e., A_signal) and the background (i.e., A_noise), and these values were then introduced into the following equation SNR_(meas.)=20 log_10⁡(A_signal/A_noise). Moreover, we characterized the spectral leakage between adjacent markers. To this end, we measured the marker expression of positive cells and then calculated each marker’s contribution to spectrally adjacent channels. The leakage was calculated as the marker expression ratio (in %) between target positive cells and their expression values in adjacent spectral channels. 
+From the microscopy acquisition setup, we extracted the numerical aperture (NA=0.45) of the objective, and the emission filter spectra wavelengths in nanometers. With this information, we calculated the width of the point spread function using the following equation, M_(PSF-width)=0.61λ/NA, where λ is the peak wavelength of the emission spectra of each marker. In addition to all these parameters, we set the Perlin Noise parameters by estimating the frequency and persistence qualitatively for each marker.
+
+![alt text](https://github.com/djimenezsanchez/Synplex/blob/main/suppltab2.jpg)
+
