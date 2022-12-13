@@ -17,6 +17,9 @@ Run the main.m file using MATLAB to generate synthetic multiplexed histological 
 
 where blue is DAPI (staining nuclear DNA), red is cytokeratin (staining tumor cells), and green is CD8 (staining T cells)
 
+## Simulation of Endometrial Carcinoma from real data
+We use real multiple immunofluorescence data (https://zenodo.org/record/4630664#.Y5iFFHbMJD8) to extract tumor features and use them to generate synthetic data.
+[Modeling from real data](README_4.md#Modeling-from-real-data)
 
 ## Citation
 Please cite this paper in case our method or parts of it were helpful in your work.
