@@ -19,3 +19,5 @@ To simulate the cell morphology of phenotypes, for each cell phenotype, we estim
 These values were used to define the configuration of Synplex. We then simulated interactions between our phenotypes based on knowledge acquired from previous studies namely, attraction between CD8+ and FoxP3+ cells, CD8+FoxP3+ and FoxP3+ cells, CD8+ and tumor cells and, finally, CD137+ and tumor cells.
 
 ![alt text](https://github.com/djimenezsanchez/Synplex/blob/main/supplfig.jpg)
+
+![alt text](https://github.com/djimenezsanchez/Synplex/blob/main/suppltab.jpg)
